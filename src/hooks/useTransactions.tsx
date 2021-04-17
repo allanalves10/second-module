@@ -28,11 +28,20 @@ const TransactionContext = createContext<TransactionsContextData>(
 
 export function TransactionsProvider({ children }: TransactionsProviderProps) {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
+    let transactionData: Transaction[] = [];
 
     useEffect(() => {
-        api.get('transactions').then(response => {
-            setTransactions(response.data.transactions);
-        })
+        if (localStorage.getItem('data')) {
+            const transactionsStorage = JSON.parse(localStorage.getItem('data') || '[]');
+            transactionsStorage.forEach((element: Transaction) => {
+                element.id = Math.random();
+            });
+            setTransactions(transactionsStorage);
+        } else {
+            api.get('transactions').then(response => {
+                setTransactions(response.data.transactions);
+            })
+        }
     }, []);
 
     async function createTransaction(transactionInput: TransactionInput) {
@@ -48,6 +57,16 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
             ...transactions,
             transaction,
         ]);
+
+        if (transactions.length > 0) {
+            transactionData.push(...transactions, transaction);
+        } else {
+            transactionData.push(transaction);
+        }
+        
+        localStorage.clear();
+        localStorage.setItem('data', JSON.stringify(transactionData));
+
     }
 
     return (
