@@ -1,8 +1,14 @@
+import { useEffect } from "react";
 import { useTransactions } from "../../hooks/useTransactions";
 import { Container } from "./styles";
 
 export function Transaction() {
     const { transactions } = useTransactions();
+    
+    useEffect(() => {
+        localStorage.clear();
+        localStorage.setItem('data', JSON.stringify(transactions));
+    }, []);
 
     return(
         <Container>

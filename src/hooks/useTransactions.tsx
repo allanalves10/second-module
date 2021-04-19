@@ -28,7 +28,6 @@ const TransactionContext = createContext<TransactionsContextData>(
 
 export function TransactionsProvider({ children }: TransactionsProviderProps) {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
-    let transactionData: Transaction[] = [];
 
     useEffect(() => {
         if (localStorage.getItem('data')) {
@@ -57,16 +56,6 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
             ...transactions,
             transaction,
         ]);
-
-        if (transactions.length > 0) {
-            transactionData.push(...transactions, transaction);
-        } else {
-            transactionData.push(transaction);
-        }
-        
-        localStorage.clear();
-        localStorage.setItem('data', JSON.stringify(transactionData));
-
     }
 
     return (
