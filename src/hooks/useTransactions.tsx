@@ -56,6 +56,8 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
             ...transactions,
             transaction,
         ]);
+        localStorage.clear();
+        localStorage.setItem('data', JSON.stringify([...transactions, transaction]));
     }
 
     return (

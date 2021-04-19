@@ -34,5 +34,25 @@ export const Container = styled.div`
         &.withdraw {
             color: var(--red);
         }
+
+        &:last-child {
+            background: transparent;
+        }
+    }
+`;
+
+export const Button = styled.button`
+    font-size: 1rem;
+    color: var(--shape);
+    background: var(--red);
+    border: 0;
+    padding: 0 2rem;
+    border-radius: 0.25rem;
+    height: 3rem;
+
+    transition: filter 0.2s;
+
+    &:hover {
+        filter: brightness(0.7);
     }
 `;

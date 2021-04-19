@@ -1,14 +1,13 @@
 import { useEffect } from "react";
 import { useTransactions } from "../../hooks/useTransactions";
-import { Container } from "./styles";
+import { Button, Container } from "./styles";
 
 export function Transaction() {
     const { transactions } = useTransactions();
-    
-    useEffect(() => {
-        localStorage.clear();
-        localStorage.setItem('data', JSON.stringify(transactions));
-    }, []);
+
+    function handleRemove(transaction: any) {
+
+    }
 
     return(
         <Container>
@@ -20,6 +19,7 @@ export function Transaction() {
                             <th>Valor</th>
                             <th>Categoria</th>
                             <th>Data</th>
+                            <th>Editar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,6 +34,9 @@ export function Transaction() {
                                 <td>{transaction.category}</td>
                                 <td>
                                     {new Intl.DateTimeFormat('pt-BR').format(new Date(transaction.createdAt))}
+                                </td>
+                                <td>
+                                    <Button type="button" className="btn btn-warning" onClick={() => handleRemove(transaction)}>X</Button>
                                 </td>
                             </tr>
                         ))}
